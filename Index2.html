@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nahin Muhsin · premium portfolio</title>
+  <!-- SEO friendly -->
+  <meta name="description" content="Luxury portfolio of Nahin Muhsin – Hadis & Islamic Studies, graphic designer, handwriting coach, MS Office expert.">
+  <meta name="author" content="Nahin Muhsin">
+  <!-- Google Fonts (elegant serif + sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (light icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ========== RESET & GLOBAL ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background-color: #fcf9f7;   /* soft off-white */
+      color: #2e2e2e;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      font-weight: 300;
+      opacity: 0;                   /* hidden until preloader finishes */
+      transition: opacity 0.5s ease;
+      overflow-x: hidden;
+    }
+    body.loaded { opacity: 1; }
+    /* typography */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: -8px; left: 0;
+      width: 70px; height: 2px;
+      background: linear-gradient(90deg, #d4af37, #f0e6d2); /* light gold */
+      border-radius: 2px;
+    }
+    .section-pad { padding: 90px 24px; max-width: 1300px; margin: 0 auto; }
+    /* glassmorphism & card style */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08), 0 8px 24px -8px rgba(0,0,0,0.05);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .glass-card:hover {
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.12), 0 12px 28px -6px rgba(212,175,55,0.15);
+      transform: translateY(-4px);
+    }
+    /* ========== PRELOADER ========== */
+    #preloader {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: #fcf9f7; z-index:2000;
+      display: flex; justify-content: center; align-items: center;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+    #preloader.hidden { opacity: 0; visibility: hidden; }
+    .loader {
+      width: 60px; height: 60px;
+      border: 3px solid #e9dfd3; border-top: 3px solid #d4af37;
+      border-radius: 50%;
+      animation: spin 0.8s ease-in-out infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ========== SCROLL PROGRESS ========== */
+    #progress-bar {
+      position: fixed; top:0; left:0; width:0%; height:3px;
+      background: linear-gradient(90deg, #c5a572, #eedbba);
+      z-index: 1000; transition: width 0.1s ease;
+    }
+    /* ========== CURSOR (premium micro) ========== */
+    .cursor-dot {
+      width: 8px; height: 8px; background: #c5a572;
+      border-radius: 50%; position: fixed; pointer-events: none;
+      z-index: 9999; transition: transform 0.1s, opacity 0.2s;
+      transform: translate(-50%, -50%);
+      opacity: 0.7; box-shadow: 0 0 15px #e9cfa0;
+    }
+    .cursor-outline {
+      width: 40px; height: 40px; border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 50%; position: fixed; pointer-events: none;
+      z-index: 9998; transition: all 0.15s ease-out;
+      transform: translate(-50%, -50%);
+      backdrop-filter: blur(2px);
+    }
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: sticky; top: 16px; z-index: 500;
+      max-width: 1000px; margin: 0 auto 20px; padding: 0 20px;
+    }
+    .nav-container {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 60px; padding: 12px 32px;
+      box-shadow: 0 15px 40px -20px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,240,0.8);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 1.7rem; font-weight: 500; font-family: 'Playfair Display', serif; color: #a1844d; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      text-decoration: none; color: #3a3a3a; font-weight: 400;
+      font-size: 1.05rem; padding: 6px 0; border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      border-bottom-color: #d4af37; color: #a1844d;
+    }
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 80vh; display: flex; align-items: center;
+      justify-content: center; text-align: center; position: relative;
+      padding: 120px 24px 80px;
+    }
+    .hero h1 {
+      font-size: 5rem; font-weight: 600; color: #1e1e1e;
+      line-height: 1.1; animation: fadeUp 1.2s ease;
+    }
+    .hero h1 span { color: #b89b60; font-style: italic; }
+    .hero-sub {
+      font-size: 1.6rem; margin-top: 20px; font-weight: 300;
+      color: #4f4f4f; animation: fadeUp 1.2s 0.1s backwards;
+    }
+    .hero-desc {
+      max-width: 600px; margin: 30px auto 0; font-size: 1.2rem;
+      background: rgba(255,250,240,0.5); backdrop-filter: blur(4px);
+      padding: 16px 32px; border-radius: 60px; border: 1px solid rgba(212,175,55,0.2);
+    }
+    @keyframes fadeUp { 0% { opacity:0; transform:translateY(30px); } 100% { opacity:1; transform:translateY(0); } }
+    /* ========== ABOUT ========== */
+    .about-grid {
+      display: flex; gap: 60px; align-items: center;
+      background: rgba(255,250,245,0.6); border-radius: 48px; padding: 48px;
+      backdrop-filter: blur(4px); border: 1px solid rgba(255,255,240,0.7);
+    }
+    .about-text p { font-size: 1.25rem; margin-bottom: 16px; }
+    .institute-badge {
+      background: rgba(255,255,255,0.9); border-radius: 100px; padding: 12px 30px;
+      display: inline-block; border-left: 5px solid #d4af37;
+    }
+    /* ========== SKILLS / TOOLS (animated cards) ========== */
+    .skills-grid, .tools-grid, .portfolio-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 28px;
+      margin-top: 40px;
+    }
+    .skill-card, .tool-card, .portfolio-card {
+      background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+      border-radius: 28px; padding: 28px 16px; text-align: center;
+      border: 1px solid rgba(255,250,235,0.8); transition: all 0.3s;
+      box-shadow: 0 10px 30px -12px rgba(0,0,0,0.05);
+    }
+    .skill-card i, .tool-card i { font-size: 2.8rem; color: #b99e62; margin-bottom: 15px; }
+    .skill-card h3 { font-size: 1.5rem; margin-bottom: 4px; }
+    .counter { font-size: 2.2rem; font-family: 'Playfair Display'; color: #a1844d; }
+    /* ========== EXPERIENCE ========== */
+    .exp-item {
+      display: flex; gap: 30px; padding: 36px; background: white; border-radius: 48px;
+      margin-bottom: 20px; box-shadow: 0 8px 25px -12px rgba(0,0,0,0.05);
+      border: 1px solid #f5ede1;
+    }
+    .exp-year { font-size: 1.8rem; color: #cbb083; font-weight: 200; min-width: 120px; }
+    /* ========== PORTFOLIO CARDS ========== */
+    .portfolio-card {
+      padding: 0; overflow: hidden; background: white; text-align: left;
+    }
+    .portfolio-card img {
+      width: 100%; height: 200px; object-fit: cover; opacity: 0.9;
+      transition: transform 0.4s;
+    }
+    .portfolio-card:hover img { transform: scale(1.03); }
+    .portfolio-info { padding: 20px; }
+    /* ========== TESTIMONIAL ========== */
+    .testimonial-card {
+      background: #ffffffc7; backdrop-filter: blur(6px);
+      padding: 40px; border-radius: 48px; border: 1px solid #efe3d3;
+      font-size: 1.3rem; font-style: italic; max-width: 800px; margin: 40px auto;
+    }
+    /* ========== CONTACT ========== */
+    .contact-form {
+      max-width: 700px; margin: 40px auto 0; background: rgba(255,250,240,0.6);
+      backdrop-filter: blur(14px); padding: 48px; border-radius: 64px;
+      border: 1px solid rgba(212,175,55,0.15);
+    }
+    .input-group { margin-bottom: 28px; }
+    input, textarea {
+      width: 100%; padding: 18px 24px; background: white; border: 1px solid #e0d6cb;
+      border-radius: 48px; font-size: 1rem; outline: none; transition: 0.2s;
+    }
+    input:focus, textarea:focus { border-color: #d4af37; box-shadow: 0 0 0 3px #f5e7d4; }
+    .btn-magnetic {
+      background: #b48d4b; border: none; color: white; padding: 16px 40px;
+      border-radius: 60px; font-size: 1.2rem; cursor: pointer; transition: 0.2s;
+      box-shadow: 0 10px 20px -10px #b48d4b80; display: inline-block;
+    }
+    .btn-magnetic:hover { background: #c9a45c; transform: scale(1.02); }
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center; padding: 40px; background: #f2ebe2; color: #3d3529;
+      border-top: 1px solid #ebddcf;
+    }
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 800px) {
+      h2 { font-size: 2.2rem; }
+      .hero h1 { font-size: 3.8rem; }
+      .nav-links { display: none; }  /* for simplicity keep minimal */
+      .about-grid { flex-direction: column; }
+    }
+    /* ========== REVEAL ANIMATION (intersection) ========== */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    /* gold accent */
+    .gold-text { color: #b4945a; }
+  </style>
+</head>
+<body>
+  <div id="preloader"><div class="loader"></div></div>
+  <div id="progress-bar"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container glass-card" style="border-radius:60px;">
+      <span class="logo">N. Muhsin</span>
+      <div class="nav-links">
+        <a href="#hero" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Works</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero section-pad">
+    <div>
+      <h1 class="reveal">Nahin <span>Muhsin</span></h1>
+      <div class="hero-sub reveal">Hadis & Islamic Studies · Artisan of words & design</div>
+      <div class="hero-desc glass-card reveal">Govt. Madrasah-E-Alia · crafting excellence since 2016</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section-pad">
+    <h2 class="reveal">About me</h2>
+    <div class="about-grid glass-card reveal">
+      <div class="about-text">
+        <p>Scholar of <strong>Hadis & Islamic Studies</strong> with a refined eye for design. I blend traditional discipline with modern visual communication.</p>
+        <p>Handwriting coach, graphic designer, and MS Office virtuoso — I help ideas take elegant form.</p>
+        <div class="institute-badge">🏛️ Govt. Madrasah-E-Alia · Dept. of Hadis & Islamic Studies</div>
+      </div>
+      <div class="about-stats">
+        <div class="counter">7+</div> <span>years of craft</span><br>
+        <div class="counter">200+</div> <span>mentored sessions</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS + animated counters -->
+  <section id="skills" class="section-pad">
+    <h2 class="reveal">Core expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-card glass-card reveal"><i class="fas fa-pen-fancy"></i><h3>Graphic Designer</h3><div class="counter" data-target="8">0</div><span>years</span></div>
+      <div class="skill-card glass-card reveal"><i class="fas fa-pen"></i><h3>Hand Writing Coach</h3><div class="counter" data-target="6">0</div><span>years</span></div>
+      <div class="skill-card glass-card reveal"><i class="fas fa-file-word"></i><h3>MS Word Expert</h3><div class="counter" data-target="10">0</div><span>+ projects</span></div>
+      <div class="skill-card glass-card reveal"><i class="fas fa-file-excel"></i><h3>MS Excel Expert</h3><div class="counter" data-target="10">0</div><span>+ models</span></div>
+    </div>
+  </section>
+
+  <!-- SOFTWARE & TOOLS -->
+  <section class="section-pad">
+    <h2 class="reveal">Software & tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card glass-card reveal"><i class="fab fa-adobe"></i><h4>Illustrator</h4></div>
+      <div class="tool-card glass-card reveal"><i class="fas fa-paint-brush"></i><h4>Canva</h4></div>
+      <div class="tool-card glass-card reveal"><i class="fas fa-file-word"></i><h4>MS Word</h4></div>
+      <div class="tool-card glass-card reveal"><i class="fas fa-file-excel"></i><h4>MS Excel</h4></div>
+      <div class="tool-card glass-card reveal"><i class="fas fa-file-powerpoint"></i><h4>PowerPoint</h4></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE / EXPERTISE -->
+  <section class="section-pad">
+    <h2 class="reveal">Experience</h2>
+    <div class="exp-item glass-card reveal"><span class="exp-year">2021–now</span><div><strong>Senior Graphic Designer</strong> – Alia Design Studio · visual identity & book layouts</div></div>
+    <div class="exp-item glass-card reveal"><span class="exp-year">2018–now</span><div><strong>Handwriting & Calligraphy Coach</strong> – private & institutional workshops</div></div>
+    <div class="exp-item glass-card reveal"><span class="exp-year">2016–now</span><div><strong>MS Office specialist</strong> – training & automation for academia</div></div>
+  </section>
+
+  <!-- PORTFOLIO / WORKS -->
+  <section id="portfolio" class="section-pad">
+    <h2 class="reveal">Selected works</h2>
+    <div class="portfolio-grid">
+      <div class="portfolio-card glass-card reveal"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='%23f2e4d3'%3E%3Crect width='400' height='240'/%3E%3Ctext x='40' y='140' font-family='DM Sans' font-size='22' fill='%2392806b'%3Eillustration%3C/text%3E%3C/svg%3E" alt="premium"><div class="portfolio-info"><h4>Quranic Illuminations</h4><p>poster series</p></div></div>
+      <div class="portfolio-card glass-card reveal"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='%23ece1d2'%3E%3Crect width='400' height='240'/%3E%3Ctext x='40' y='140' font-family='DM Sans' font-size='22' fill='%2392806b'%3Ecalligraphy%3C/text%3E%3C/svg%3E" alt="premium"><div class="portfolio-info"><h4>Copperplate coaching</h4><p>workshop</p></div></div>
+      <div class="portfolio-card glass-card reveal"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240' viewBox='0 0 400 240' fill='%23f5e9db'%3E%3Crect width='400' height='240'/%3E%3Ctext x='40' y='140' font-family='DM Sans' font-size='22' fill='%2392806b'%3Eword template%3C/text%3E%3C/svg%3E" alt="premium"><div class="portfolio-info"><h4>Academic thesis format</h4><p>MS Word</p></div></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (optional) -->
+  <section class="section-pad">
+    <h2 class="reveal">kind words</h2>
+    <div class="testimonial-card glass-card reveal">“Nahin brings refinement to every slide, every letter. His visual flow is unmatched.” <br>— Dr. Fatima Al-Madrasah</div>
+    <div class="testimonial-card glass-card reveal">“The handwriting coaching changed my entire approach. patient and precise.” <br>— R. Karim, educator</div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-pad">
+    <h2 class="reveal">Let’s connect</h2>
+    <div class="contact-form glass-card reveal">
+      <form id="premiumForm">
+        <div class="input-group"><input type="text" placeholder="Your name" aria-label="Name"></div>
+        <div class="input-group"><input type="email" placeholder="Email address" aria-label="Email"></div>
+        <div class="input-group"><textarea rows="4" placeholder="Tell about your project..." aria-label="Message"></textarea></div>
+        <button type="submit" class="btn-magnetic" id="magicBtn">send message <i class="fas fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© Nahin Muhsin · Govt. Madrasah-E-Alia · all rights reserved</p>
+    <p style="margin-top:12px; opacity:0.7;"><i class="fas fa-map-pin"></i> Dhaka · light & elegance</p>
+  </footer>
+
+  <script>
+    (function() {
+      // preloader
+      window.addEventListener('load', () => {
+        document.getElementById('preloader').classList.add('hidden');
+        document.body.classList.add('loaded');
+      });
+
+      // scroll progress bar
+      const progressBar = document.getElementById('progress-bar');
+      window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+      });
+
+      // custom cursor (premium micro)
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorOutline = document.querySelector('.cursor-outline');
+      if (window.matchMedia("(pointer:fine)").matches) {
+        document.addEventListener('mousemove', (e) => {
+          cursorDot.style.left = e.clientX + 'px';
+          cursorDot.style.top = e.clientY + 'px';
+          cursorOutline.style.left = e.clientX + 'px';
+          cursorOutline.style.top = e.clientY + 'px';
+        });
+        // magnetic effect on button
+        const btn = document.getElementById('magicBtn');
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width/2;
+          const y = e.clientY - rect.top - rect.height/2;
+          btn.style.transform = `translate(${x*0.2}px, ${y*0.1}px) scale(1.02)`;
+        });
+        btn.addEventListener('mouseleave', () => btn.style.transform = '');
+      } else { // hide custom cursor on touch
+        cursorDot.style.display = 'none'; cursorOutline.style.display = 'none';
+      }
+
+      // intersection observer (reveal sections + counters)
+      const reveals = document.querySelectorAll('.reveal');
+      const counters = document.querySelectorAll('.counter');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // if contains counter, start counting (simple animation)
+            if (entry.target.querySelector('.counter') || entry.target.classList.contains('counter')) {
+              const c = entry.target.classList.contains('counter') ? entry.target : entry.target.querySelector('.counter');
+              if (c && !c.dataset.animated) {
+                c.dataset.animated = true;
+                const target = parseInt(c.dataset.target) || 8;
+                let current = 0, inc = target/50;
+                const timer = setInterval(() => {
+                  current += inc;
+                  if (current >= target) { c.innerText = target; clearInterval(timer); }
+                  else c.innerText = Math.floor(current);
+                }, 20);
+              }
+            }
+          }
+        });
+      }, { threshold: 0.15 });
+
+      reveals.forEach(el => observer.observe(el));
+      // manually also observe counters inside cards (already observed via parent .reveal)
+      
+      // active nav highlight on scroll
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 200;
+          if (pageYOffset >= sectionTop) current = section.getAttribute('id');
+        });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+        });
+      });
+
+      // form prevent default (premium touch)
+      document.getElementById('premiumForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('✨ Thank you. Your message shimmers with elegance (demo).');
+      });
+
+      // navbar glass sticky effect subtle
+    })();
+  </script>
+  <!-- tiny extra: smooth scroll for anchor links -->
+  <script>
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href').substring(1);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
